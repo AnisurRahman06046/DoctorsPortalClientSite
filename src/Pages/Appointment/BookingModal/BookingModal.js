@@ -1,9 +1,19 @@
 import { format } from "date-fns";
 import React from "react";
 
-const BookingModal = ({ treatment, selectedDate }) => {
+const BookingModal = ({ treatment, selectedDate, setTreatment }) => {
   const { name, slots } = treatment;
   const date = format(selectedDate, "PP");
+  const handleBooking = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const slot = form.slot.value;
+    const name = form.name.value;
+    const email = form.email.value;
+    const phone = form.phone.value;
+
+    setTreatment(null);
+  };
   return (
     <>
       <input type="checkbox" id="booking-modal" className="modal-toggle" />
@@ -16,7 +26,7 @@ const BookingModal = ({ treatment, selectedDate }) => {
             ✕
           </label>
           <h3 className="text-lg font-bold">{name}</h3>
-          <form className="grid grid-cols-1 gap-3">
+          <form onSubmit={handleBooking} className="grid grid-cols-1 gap-3">
             <input
               type="text"
               value={date}
@@ -24,19 +34,29 @@ const BookingModal = ({ treatment, selectedDate }) => {
               placeholder="Type here"
               className="input w-full "
             />
-            <select className="select select-bordered w-full ">
-              {slots.map((slot) => (
-                <option value={slot}>{slot}</option>
+            <select name="slot" className="select select-bordered w-full ">
+              {slots.map((slot, i) => (
+                <option key={i} value={slot}>
+                  {slot}
+                </option>
               ))}
             </select>
             <input
+              name="name"
               type="text"
-              placeholder="Type here"
+              placeholder="Your Name"
               className="input w-full input-bordered"
             />
             <input
+              name="email"
+              type="email"
+              placeholder="Email Address"
+              className="input w-full input-bordered"
+            />
+            <input
+              name="phone"
               type="text"
-              placeholder="Type here"
+              placeholder="Phone Number"
               className="input w-full input-bordered"
             />
             <br />
