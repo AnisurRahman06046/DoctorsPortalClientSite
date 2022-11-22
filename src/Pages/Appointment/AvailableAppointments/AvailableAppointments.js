@@ -18,16 +18,16 @@ const AvailableAppointments = ({ selectedDate }) => {
   } = useQuery({
     queryKey: ["appointmentOptions", date],
     queryFn: () =>
-      fetch(`http://localhost:5000/appointmentOptions?date=${date}`).then(
-        (res) => res.json()
-      ),
+      fetch(
+        ` https://doctors-portal-server-m73.vercel.app/appointmentOptions?date=${date}`
+      ).then((res) => res.json()),
   });
   if (isLoading) {
     return <Loading></Loading>;
   }
 
   //   useEffect(() => {
-  //     fetch("http://localhost:5000/appointmentOptions")
+  //     fetch(" https://doctors-portal-server-m73.vercel.app/appointmentOptions")
   //       .then((res) => res.json())
   //       .then((data) => setAppointmentOptions(data));
   //   }, []);
